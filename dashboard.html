@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}My Trips — WanderAI{% endblock %}
+{% block content %}
+<div class="dashboard-page py-5">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="row align-items-center mb-4">
+      <div class="col">
+        <span class="section-label">Your Account</span>
+        <h1 class="page-title mb-0">Welcome, {{ current_user.name.split()[0] }} <span class="wave">👋</span></h1>
+      </div>
+      <div class="col-auto">
+        <a href="{{ url_for('plan_trip') }}" class="btn btn-accent rounded-pill px-4">
+          <i class="bi bi-plus-lg me-1"></i>New Trip
+        </a>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="row g-3 mb-5">
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-number">{{ trips|length }}</div>
+          <div class="stat-label">Total Trips</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-number">{{ trips|map(attribute='destination')|unique|list|length }}</div>
+          <div class="stat-label">Destinations</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-number">{{ trips|sum(attribute='days') }}</div>
+          <div class="stat-label">Days Planned</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="stat-number">${{ "{:,.0f}".format(trips|sum(attribute='budget')) }}</div>
+          <div class="stat-label">Total Budget</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="search-bar-wrap mb-4">
+      <form method="GET" action="{{ url_for('dashboard') }}" class="row g-2 align-items-center">
+        <div class="col">
+          <div class="input-icon-wrap">
+            <i class="bi bi-search input-icon"></i>
+            <input type="text" name="q" class="form-control input-with-icon" placeholder="Search by destination…" value="{{ query }}">
+          </div>
+        </div>
+        <div class="col-auto">
+          <select name="days" class="form-select" style="min-width:140px;">
+            <option value="">All durations</option>
+            {% for d in [1,2,3,5,7,10,14] %}
+            <option value="{{ d }}" {% if filter_days == d|string %}selected{% endif %}>{{ d }} day{{ 's' if d > 1 }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-accent rounded-pill px-4" type="submit">Search</button>
+        </div>
+        {% if query or filter_days %}
+        <div class="col-auto">
+          <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary rounded-pill">Clear</a>
+        </div>
+        {% endif %}
+      </form>
+    </div>
+
+    <!-- Trips Grid -->
+    {% if trips %}
+    <div class="row g-4">
+      {% for trip in trips %}
+      <div class="col-md-6 col-lg-4">
+        <div class="trip-card h-100">
+          <div class="trip-card-banner" style="background: {{ loop.cycle('var(--banner-1)', 'var(--banner-2)', 'var(--banner-3)', 'var(--banner-4)') }}">
+            <div class="trip-card-days">{{ trip.days }}d</div>
+            <div class="trip-card-dest">{{ trip.destination }}</div>
+          </div>
+          <div class="trip-card-body">
+            {% if trip.source %}
+            <p class="trip-route small text-muted mb-2">
+              <i class="bi bi-geo me-1"></i>{{ trip.source }} → {{ trip.destination }}
+            </p>
+            {% endif %}
+            <div class="trip-chips mb-3">
+              <span class="trip-chip"><i class="bi bi-currency-dollar me-1"></i>${{ "%.0f"|format(trip.budget) }}</span>
+              <span class="trip-chip"><i class="bi bi-people me-1"></i>{{ trip.travelers }}</span>
+              {% for interest in trip.interests.split(',')[:2] %}
+              <span class="trip-chip interest">{{ interest.strip() }}</span>
+              {% endfor %}
+            </div>
+            {% if trip.travel_dates %}
+            <p class="small text-muted mb-2"><i class="bi bi-calendar3 me-1"></i>{{ trip.travel_dates }}</p>
+            {% endif %}
+            <p class="xsmall text-muted">Created {{ trip.created_at.strftime('%b %d, %Y') }}</p>
+          </div>
+          <div class="trip-card-footer">
+            <a href="{{ url_for('view_trip', trip_id=trip.trip_id) }}" class="btn btn-accent btn-sm rounded-pill w-100">
+              View Itinerary <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state text-center py-5">
+      <div class="empty-icon mb-3"><i class="bi bi-map"></i></div>
+      <h4>No trips yet</h4>
+      <p class="text-muted">Plan your first AI-powered adventure!</p>
+      <a href="{{ url_for('plan_trip') }}" class="btn btn-accent rounded-pill px-5 mt-2">
+        <i class="bi bi-plus-lg me-1"></i>Plan a Trip
+      </a>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

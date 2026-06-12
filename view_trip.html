@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}{{ trip.destination }} Trip — WanderAI{% endblock %}
+{% block content %}
+<div class="trip-view-page py-5">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="trip-hero mb-5">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-secondary rounded-pill">
+          <i class="bi bi-arrow-left me-1"></i>My Trips
+        </a>
+      </div>
+      <div class="row align-items-end mt-3">
+        <div class="col">
+          <span class="section-label">{{ trip.days }}-Day Itinerary</span>
+          <h1 class="page-title mb-1">
+            {% if trip.source %}{{ trip.source }} → {% endif %}{{ trip.destination }}
+          </h1>
+          <div class="d-flex flex-wrap gap-3 mt-2">
+            <span class="trip-meta-badge"><i class="bi bi-calendar3 me-1"></i>{{ trip.days }} days</span>
+            <span class="trip-meta-badge"><i class="bi bi-currency-dollar me-1"></i>${{ "%.0f"|format(trip.budget) }} budget</span>
+            <span class="trip-meta-badge"><i class="bi bi-people me-1"></i>{{ trip.travelers }} traveler(s)</span>
+            {% if trip.travel_dates %}<span class="trip-meta-badge"><i class="bi bi-calendar-range me-1"></i>{{ trip.travel_dates }}</span>{% endif %}
+            <span class="trip-meta-badge"><i class="bi bi-heart me-1"></i>{{ trip.interests }}</span>
+          </div>
+        </div>
+        <div class="col-auto">
+          <form method="POST" action="{{ url_for('delete_trip', trip_id=trip.trip_id) }}" onsubmit="return confirm('Delete this trip?')">
+            <button class="btn btn-outline-danger btn-sm rounded-pill">
+              <i class="bi bi-trash me-1"></i>Delete
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {% set itin = namespace(data=None) %}
+    {% if trip.itinerary %}
+      {% set raw = trip.itinerary %}
+    {% endif %}
+
+    <div class="row g-4">
+      <!-- Main itinerary -->
+      <div class="col-lg-8">
+        <div id="itineraryContent">
+          <div class="text-center py-4 text-muted">
+            <div class="spinner-border text-accent mb-2"></div>
+            <p>Loading itinerary…</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- Weather Card -->
+        {% if weather %}
+        <div class="sidebar-card mb-4">
+          <h6 class="sidebar-card-title"><i class="bi bi-cloud-sun me-2 text-accent"></i>Weather in {{ trip.destination }}</h6>
+          <div class="current-weather">
+            <img src="https://openweathermap.org/img/wn/{{ weather.current.icon }}@2x.png" alt="" class="weather-icon">
+            <div>
+              <div class="weather-temp">{{ weather.current.temp }}°C</div>
+              <div class="weather-desc">{{ weather.current.description }}</div>
+              <div class="weather-meta small text-muted">
+                Feels like {{ weather.current.feels_like }}°C · Humidity {{ weather.current.humidity }}% · Wind {{ weather.current.wind_speed }}m/s
+              </div>
+            </div>
+          </div>
+          {% if weather.forecast %}
+          <div class="forecast-row mt-3">
+            {% for f in weather.forecast %}
+            <div class="forecast-item">
+              <img src="https://openweathermap.org/img/wn/{{ f.icon }}.png" alt="" style="width:36px">
+              <div class="small fw-500">{{ f.temp_max }}° / {{ f.temp_min }}°</div>
+              <div class="xsmall text-muted">{{ f.description }}</div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Budget sidebar rendered by JS -->
+        <div id="budgetSidebar"></div>
+
+        <!-- Tips sidebar rendered by JS -->
+        <div id="tipsSidebar"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const RAW_ITINERARY = {{ trip.itinerary | tojson }};
+</script>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/trip.js') }}"></script>
+{% endblock %}
