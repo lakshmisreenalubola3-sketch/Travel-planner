@@ -1,0 +1,554 @@
+/* ===================================================
+   WanderAI — Main Stylesheet
+   Palette: Deep teal nav, warm sand accents, clean white
+=================================================== */
+
+:root {
+  --nav-bg: #0f2540;
+  --accent: #e8853a;
+  --accent-hover: #d4732a;
+  --accent-light: rgba(232, 133, 58, 0.12);
+  --surface: #ffffff;
+  --surface-2: #f8f9fc;
+  --border: #e8ebf0;
+  --text-primary: #1a2332;
+  --text-muted: #6b7688;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.10);
+  --radius: 14px;
+  --banner-1: linear-gradient(135deg, #1a6b5e 0%, #0d4a3f 100%);
+  --banner-2: linear-gradient(135deg, #3a5fa8 0%, #1e3c7a 100%);
+  --banner-3: linear-gradient(135deg, #8b4a9e 0%, #5c2d72 100%);
+  --banner-4: linear-gradient(135deg, #c05621 0%, #8b3a14 100%);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background: var(--surface-2);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+.fw-700 { font-weight: 700; }
+.xsmall { font-size: 0.75rem; }
+.py-6 { padding-top: 4rem; padding-bottom: 4rem; }
+.text-accent { color: var(--accent) !important; }
+.link-accent { color: var(--accent); text-decoration: none; }
+.link-accent:hover { color: var(--accent-hover); }
+
+/* ── Navbar ── */
+.wander-nav {
+  background: var(--nav-bg);
+  padding: 0.75rem 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.wander-nav .navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff !important;
+  letter-spacing: -0.5px;
+}
+.wander-nav .nav-link {
+  color: rgba(255,255,255,0.8) !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+.wander-nav .nav-link:hover,
+.wander-nav .nav-link.active {
+  color: #fff !important;
+  background: rgba(255,255,255,0.12);
+}
+
+/* ── Accent Button ── */
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-accent:hover, .btn-accent:focus {
+  background: var(--accent-hover);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(232,133,58,0.35);
+}
+
+/* ── Section Labels ── */
+.section-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* ── Input Styling ── */
+.input-icon-wrap { position: relative; }
+.input-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  pointer-events: none;
+  z-index: 2;
+}
+.input-with-icon {
+  padding-left: 2.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.92rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-with-icon:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(232,133,58,0.12);
+  outline: none;
+}
+.btn-eye {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+
+/* ── Footer ── */
+.wander-footer {
+  background: var(--nav-bg);
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── LANDING PAGE ── */
+.landing-body { background: #fff; }
+
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80') center/cover no-repeat;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(15,37,64,0.88) 0%, rgba(15,37,64,0.65) 60%, rgba(200,80,30,0.30) 100%);
+}
+.hero-content { position: relative; z-index: 2; padding: 6rem 1rem 4rem; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(232,133,58,0.2);
+  border: 1px solid rgba(232,133,58,0.5);
+  color: #f5a96e;
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.78);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.stat-pill {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.9);
+  border-radius: 100px;
+  padding: 0.4rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+}
+
+.features-section { background: var(--surface-2); }
+.feature-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  border: 1.5px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.feature-icon {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.feature-card h5 { font-family: 'Inter', sans-serif; font-weight: 600; margin-bottom: 0.5rem; }
+.feature-card p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+
+.cta-section { background: #fff; }
+
+/* ── AUTH PAGES ── */
+.auth-page {
+  background: linear-gradient(135deg, var(--nav-bg) 0%, #1a3a5c 100%);
+  min-height: 100vh;
+}
+.auth-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+}
+.brand-link {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--nav-bg);
+  text-decoration: none;
+}
+.auth-header h2 { font-size: 1.5rem; font-weight: 700; }
+
+/* ── PLAN TRIP ── */
+.plan-page { background: var(--surface-2); }
+.plan-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1.5px solid var(--border);
+}
+.form-section {
+  padding: 1.5rem 0;
+  border-bottom: 1.5px solid var(--border);
+}
+.form-section:last-of-type { border-bottom: none; }
+.form-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Interest chips */
+.interests-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.interest-chip { cursor: pointer; }
+.interest-chip input { display: none; }
+.interest-chip span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 1rem;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: #fff;
+  transition: all 0.2s;
+  user-select: none;
+}
+.interest-chip input:checked + span {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+}
+.interest-chip:hover span {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── DASHBOARD ── */
+.dashboard-page { background: var(--surface-2); }
+.wave { font-style: normal; }
+
+.stat-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-top: 0.25rem; }
+
+.search-bar-wrap {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Trip cards */
+.trip-card {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.trip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.trip-card-banner {
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem;
+  position: relative;
+}
+.trip-card-days {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.25rem;
+}
+.trip-card-dest {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  line-height: 1.1;
+}
+.trip-card-body { padding: 1rem; flex: 1; }
+.trip-card-footer { padding: 0.75rem 1rem; border-top: 1.5px solid var(--border); }
+.trip-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.trip-chip {
+  font-size: 0.73rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.trip-chip.interest { background: var(--accent-light); color: var(--accent); border-color: rgba(232,133,58,0.25); }
+.trip-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  color: var(--text-muted);
+}
+
+/* Empty state */
+.empty-state { padding: 3rem; }
+.empty-icon {
+  font-size: 3.5rem;
+  color: var(--accent);
+  opacity: 0.3;
+}
+
+/* ── TRIP VIEW PAGE ── */
+.trip-view-page { background: var(--surface-2); }
+.trip-hero {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem 2rem 1.5rem;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Day cards */
+.day-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.25rem;
+}
+.day-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  cursor: pointer;
+}
+.day-number-badge {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.day-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; margin: 0; }
+.day-cost { font-size: 0.82rem; color: var(--accent); font-weight: 600; }
+
+.time-block {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-2);
+  margin-bottom: 0.75rem;
+}
+.time-block-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+.time-block p { margin: 0; font-size: 0.9rem; color: var(--text-primary); }
+
+.meals-section { margin-top: 1rem; }
+.meal-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.87rem;
+}
+.meal-item:last-child { border-bottom: none; }
+.meal-label { font-weight: 600; min-width: 70px; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; }
+
+.highlight-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.highlight-tag {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 100px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Sidebar cards */
+.sidebar-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.sidebar-card-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Weather */
+.current-weather { display: flex; align-items: center; gap: 0.75rem; }
+.weather-icon { width: 56px; height: 56px; }
+.weather-temp { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1; }
+.weather-desc { font-weight: 500; font-size: 0.9rem; }
+.forecast-row { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.25rem; }
+.forecast-item {
+  flex: 0 0 auto;
+  text-align: center;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 0.5rem 0.4rem;
+  min-width: 60px;
+}
+
+/* Budget bars */
+.budget-item { margin-bottom: 0.9rem; }
+.budget-label { display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 500; margin-bottom: 0.3rem; }
+.budget-bar { height: 7px; border-radius: 10px; background: var(--border); overflow: hidden; }
+.budget-bar-fill { height: 100%; border-radius: 10px; background: var(--accent); transition: width 0.6s ease; }
+.budget-total {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1.5px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Tips */
+.tip-item {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.tip-item:last-child { border-bottom: none; }
+.tip-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.4rem; }
+  .plan-card { padding: 1.5rem; }
+  .auth-card { padding: 1.75rem; }
+  .trip-hero { padding: 1.25rem; }
+  .page-title { font-size: 1.7rem; }
+}

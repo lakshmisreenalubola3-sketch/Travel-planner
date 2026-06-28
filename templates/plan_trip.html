@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Plan a Trip — WanderAI{% endblock %}
+{% block content %}
+<div class="plan-page py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="page-header text-center mb-5">
+          <span class="section-label">AI Trip Planner</span>
+          <h1 class="page-title">Plan your dream trip</h1>
+          <p class="text-muted">Fill in the details and let WanderAI craft your perfect itinerary.</p>
+        </div>
+
+        <div class="plan-card">
+          <form method="POST" action="{{ url_for('plan_trip') }}" id="tripForm">
+
+            <!-- Route -->
+            <div class="form-section">
+              <h6 class="form-section-title"><i class="bi bi-geo-alt me-2 text-accent"></i>Route</h6>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-500">From (Source City)</label>
+                  <div class="input-icon-wrap">
+                    <i class="bi bi-geo input-icon"></i>
+                    <input type="text" name="source" class="form-control input-with-icon" placeholder="e.g. Mumbai">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-500">To (Destination) <span class="text-danger">*</span></label>
+                  <div class="input-icon-wrap">
+                    <i class="bi bi-geo-alt-fill input-icon text-accent"></i>
+                    <input type="text" name="destination" class="form-control input-with-icon" placeholder="e.g. Paris, Tokyo" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trip Details -->
+            <div class="form-section">
+              <h6 class="form-section-title"><i class="bi bi-calendar3 me-2 text-accent"></i>Trip Details</h6>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label fw-500">Number of Days</label>
+                  <div class="input-icon-wrap">
+                    <i class="bi bi-moon-stars input-icon"></i>
+                    <input type="number" name="days" class="form-control input-with-icon" value="5" min="1" max="30" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-500">Budget (INR)</label>
+                  <div class="input-icon-wrap">
+                    <i class="bi bi-currency-rupee input-icon"></i>
+                    <input type="number" name="budget" class="form-control input-with-icon" value="20000" min="100" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-500">Travelers</label>
+                  <div class="input-icon-wrap">
+                    <i class="bi bi-people input-icon"></i>
+                    <input type="number" name="travelers" class="form-control input-with-icon" value="2" min="1" max="20" required>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label class="form-label fw-500">Travel Dates</label>
+                  <div class="input-icon-wrap">
+                    <i class="bi bi-calendar-range input-icon"></i>
+                    <input type="text" name="travel_dates" class="form-control input-with-icon" placeholder="e.g. Dec 15 – Dec 22, 2025">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interests -->
+            <div class="form-section">
+              <h6 class="form-section-title"><i class="bi bi-heart me-2 text-accent"></i>Travel Interests</h6>
+              <p class="small text-muted mb-3">Select all that apply — your itinerary will be tailored to these.</p>
+              <div class="interests-grid">
+                {% set interest_list = [
+                  ('Adventure', 'bi-lightning-charge-fill', 'adventure'),
+                  ('Nature', 'bi-tree-fill', 'nature'),
+                  ('Food', 'bi-egg-fried', 'food'),
+                  ('Shopping', 'bi-bag-heart-fill', 'shopping'),
+                  ('Historical Places', 'bi-building-fill', 'historical'),
+                  ('Beaches', 'bi-umbrella-fill', 'beaches'),
+                  ('Wildlife', 'bi-flower1', 'wildlife')
+                ] %}
+                {% for label, icon, val in interest_list %}
+                <label class="interest-chip">
+                  <input type="checkbox" name="interests" value="{{ label }}" {% if val in ['nature', 'food'] %}checked{% endif %}>
+                  <span><i class="bi {{ icon }} me-2"></i>{{ label }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-accent btn-lg rounded-pill px-5 py-2" id="submitBtn">
+                <span id="btnText"><i class="bi bi-stars me-2"></i>Generate My Itinerary</span>
+                <span id="btnLoading" class="d-none">
+                  <span class="spinner-border spinner-border-sm me-2"></span>Generating with AI…
+                </span>
+              </button>
+              <p class="small text-muted mt-2">This may take 10–20 seconds</p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.getElementById('tripForm').addEventListener('submit', function() {
+  document.getElementById('btnText').classList.add('d-none');
+  document.getElementById('btnLoading').classList.remove('d-none');
+  document.getElementById('submitBtn').disabled = true;
+});
+</script>
+{% endblock %}
